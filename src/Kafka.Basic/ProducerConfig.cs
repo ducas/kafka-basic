@@ -8,7 +8,7 @@
         public short Acks { get; set; }
         public string ClientId { get; set; }
 
-        public static ProducerConfig Default()
+        public static ProducerConfig GetDefaultConfig()
         {
             return new ProducerConfig
             {

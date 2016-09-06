@@ -37,7 +37,7 @@ namespace Kafka.Basic
 
         public IProducer<TKey, TMessage> CreateProducer<TKey, TMessage>()
         {
-            return CreateProducer<TKey, TMessage>(ProducerConfig.Default());
+            return CreateProducer<TKey, TMessage>(ProducerConfig.GetDefaultConfig());
         }
 
         public IProducer<TKey, TMessage> CreateProducer<TKey, TMessage>(ProducerConfig config)

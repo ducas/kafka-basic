@@ -18,14 +18,16 @@ namespace Kafka.Basic
         private readonly IProducer<string, KafkaMessage> _producer;
         private readonly IZookeeperClient _zkClient;
 
-        public KafkaTopic(IZookeeperConnection zkConnect, string name)
+        public KafkaTopic(IZookeeperConnection zkConnect, string name, ProducerConfig producerConfig = null)
         {
+            if (producerConfig == null)
+                producerConfig = ProducerConfig.GetDefaultConfig();
             _zkConnect = zkConnect;
             _name = name;
             _zkClient = zkConnect.CreateClient();
-            _producer = _zkClient.CreateProducer<string, KafkaMessage>();
+            _producer = _zkClient.CreateProducer<string, KafkaMessage>(producerConfig);
         }
-
+        
         public void Send(params Message[] messages)
         {
             _producer.Send(
