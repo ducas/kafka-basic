@@ -52,7 +52,8 @@ namespace Kafka.Basic
                     }).ToList()
                 )
             {
-                RequiredAcks = config.Acks
+                RequiredAcks = config.Acks,
+                ClientId = config.ClientId,
             };
 
             return new Producer<TKey, TMessage>(producerConfiguration);
