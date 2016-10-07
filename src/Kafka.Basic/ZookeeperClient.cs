@@ -54,6 +54,7 @@ namespace Kafka.Basic
             {
                 RequiredAcks = config.Acks,
                 ClientId = config.ClientId,
+                SendTimeout = config.SendTimeout
             };
 
             return new Producer<TKey, TMessage>(producerConfiguration);
