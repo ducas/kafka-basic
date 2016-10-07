@@ -37,7 +37,7 @@ namespace Kafka.Basic
 
         public IProducer<TKey, TMessage> CreateProducer<TKey, TMessage>()
         {
-            return CreateProducer<TKey, TMessage>(ProducerConfig.Default());
+            return CreateProducer<TKey, TMessage>(ProducerConfig.GetDefaultConfig());
         }
 
         public IProducer<TKey, TMessage> CreateProducer<TKey, TMessage>(ProducerConfig config)
@@ -52,7 +52,9 @@ namespace Kafka.Basic
                     }).ToList()
                 )
             {
-                RequiredAcks = config.Acks
+                RequiredAcks = config.Acks,
+                ClientId = config.ClientId,
+                SendTimeout = config.SendTimeout
             };
 
             return new Producer<TKey, TMessage>(producerConfiguration);

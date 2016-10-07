@@ -4,7 +4,7 @@ namespace Kafka.Basic
 {
     public interface IKafkaClient : IDisposable
     {
-        IKafkaTopic Topic(string name);
+        IKafkaTopic Topic(string name, ProducerConfig config = null);
         IKafkaConsumer Consumer(string groupName);
         IKafkaConsumer Consumer(ConsumerOptions options);
         IKafkaSimpleConsumer SimpleConsumer();
@@ -19,9 +19,9 @@ namespace Kafka.Basic
             _zkConnection = new ZookeeperConnection(zkConnect);
         }
 
-        public IKafkaTopic Topic(string name)
+        public IKafkaTopic Topic(string name, ProducerConfig config = null)
         {
-            return new KafkaTopic(_zkConnection, name);
+            return new KafkaTopic(_zkConnection, name, config);
         }
 
         public IKafkaConsumer Consumer(string groupName)
