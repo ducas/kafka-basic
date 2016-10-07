@@ -4,7 +4,6 @@ using System.Threading;
 using CommandLine;
 using Kafka.Basic;
 using Metrics;
-using System.Text;
 
 namespace Producer
 {
@@ -19,18 +18,12 @@ namespace Producer
                     errs => 1
                 );
         }
-        private static string CreateStringOfSize(int size)
-        {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < size; i++)
-                sb.Append("a");
-            return sb.ToString();
-        }
+
         private static int Run(Options options)
         {
             var timer = Metric.Timer("Sent", Unit.Events);
             Metric.Config.WithReporting(r => r.WithConsoleReport(TimeSpan.FromSeconds(5)));
-            var msg = CreateStringOfSize(300);
+
             var client = new KafkaClient(options.ZkConnect);
             var topic = client.Topic(options.Topic);
 
@@ -53,7 +46,7 @@ namespace Producer
                             new Message
                             {
                                 Key = (published + i).ToString(),
-                                Value = msg + i.ToString()
+                                Value = DateTime.UtcNow.Ticks.ToString()
                             })
                         .ToArray();
                 var time = DateTime.UtcNow.Ticks;
